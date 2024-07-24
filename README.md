@@ -6,7 +6,7 @@ Uses [libusb](https://libusb.info/) library for USB support on Windows and Linux
 
 This driver is based on black box reverse engineering made by [projectgus](https://github.com/projectgus/python-canalystii) of the USB behaviour of the proprietary software, and reading the basic data structure layouts in the original python-can canalystii source.
 
-## Standalone Usage
+## Usage Example
 
 ```c
 #include <opencanalystii.h>
@@ -95,3 +95,20 @@ Currently, the following things are not supported and may not be possible based 
 ## Performance
 
 ###TODO: Not yet tested
+
+## How to build PlatformIO based project
+
+1. [Install PlatformIO Core](https://docs.platformio.org/page/core.html)
+2. Сlone this repository
+3. Run these commands:
+
+```shell
+# Build project
+$ pio run
+
+# Run tests
+$ pio test -vvv -e linux_x64
+
+# Clean build files
+$ pio run --target clean
+```
