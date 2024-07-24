@@ -1,10 +1,6 @@
 CC = gcc
 CFLAGS = -O1 -Wall -Wextra -std=c23 -pedantic -static -Ilib/libusb-1.0.27 -Iinclude
 
-ifeq ($(shell uname),Linux)
-	LDFLAGS = -ludev
-endif
-
 TARGET = opencanalystii
 SRCS = src/opencanalystii.c
 OBJS = $(SRCS:.c=.o)
