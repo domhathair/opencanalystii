@@ -22,7 +22,7 @@ all: $(TARGET).a
 
 $(TARGET).a: $(OBJS)
 	mkdir -p out
-	ar rcs out/$(TARGET).a $(OBJS)
+	ar rcs out/lib$(TARGET).a $(OBJS)
 
 .PHONY: clean
 clean:
