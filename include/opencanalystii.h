@@ -77,12 +77,12 @@
  * Echo the message back as RX (note: the TX message is echoed even if sending
  * fails)
  */
-#define OCII_SEND_TYPE_NORETRY 1
-#define OCII_SEND_TYPE_ECHO 2
+#define OCII_SEND_TYPE_NORETRY 0x01
+#define OCII_SEND_TYPE_ECHO 0x02
 
-#define OCII_COMMAND_INIT 0x1
-#define OCII_COMMAND_START 0x2
-#define OCII_COMMAND_STOP 0x3
+#define OCII_COMMAND_INIT 0x01
+#define OCII_COMMAND_START 0x02
+#define OCII_COMMAND_STOP 0x03
 #define OCII_COMMAND_CLEAR_RX_BUFFER 0x5
 #define OCII_COMMAND_MESSAGE_STATUS 0x0A
 #define OCII_COMMAND_CAN_STATUS 0x0B
