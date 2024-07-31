@@ -23,6 +23,10 @@
 #ifndef opencanalystii_h
 #define opencanalystii_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 /**
@@ -146,10 +150,10 @@ typedef struct __attribute__((packed)) {
                     uint32_t tx_pending; /* TX message pending */
                 };
                 /**
-                 * CAN status response.
+                 * CAN status response
                  * This is guesswork, mapping the names in the DLL structure to
                  * the fields in the packet - as this pattern also applies to
-                 * the Messages, but maybe it's not this simple.
+                 * the Messages, but maybe it's not this simple
                  */
                 struct {
                     uint32_t err_interrupt;
@@ -188,6 +192,9 @@ typedef struct __attribute__((packed)) {
 #define OCIIBR800000 ((uint32_t[]){0x00, 0x16})
 #define OCIIBR1000000 ((uint32_t[]){0x00, 0x14})
 
+/**
+ * It is recommended to use this enum to specify the channel
+ */
 typedef enum {
     ocii_channel0,
     ocii_channel1,
@@ -197,16 +204,134 @@ typedef enum {
 #define OCII_CHANNEL_TO_COMMAND_EP ((uint8_t[]){0x02, 0x04})
 #define OCII_CHANNEL_TO_MESSAGE_EP ((uint8_t[]){0x01, 0x03})
 
+/**
+ * @brief Opens a device for communication
+ * 
+ * This function initializes the necessary resources to open a connection
+ * to the device. It should be called before any other device operations
+ * 
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_open_device(void);
+
+/**
+ * @brief Closes the device connection
+ * 
+ * This function releases any resources associated with the device and
+ * closes the connection. It should be called when the device is no longer needed
+ * 
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_close_device(void);
+
+/**
+ * @brief Flushes the transmit buffer for a specified channel
+ * 
+ * This function clears any data in the transmit buffer for the given channel
+ * and waits for the specified timeout period. It ensures that all pending
+ * transmissions are completed
+ * 
+ * @param channel The channel to flush the transmit buffer for
+ * @param timeout The maximum time to wait for the flush operation to complete
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_flush_tx_buffer(ocii_channel_t channel, int64_t timeout);
+
+/**
+ * @brief Clears the receive buffer for a specified channel
+ * 
+ * This function removes all data from the receive buffer for the given channel,
+ * effectively resetting it to an empty state
+ * 
+ * @param channel The channel to clear the receive buffer for
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_clear_rx_buffer(ocii_channel_t channel);
+
+/**
+ * @brief Initializes the device for a specified channel with a command
+ * 
+ * This function prepares the device for communication on the specified channel
+ * using the provided command packet. It sets up any necessary parameters for
+ * the operation
+ * 
+ * @param channel The channel to initialize
+ * @param command Pointer to the command packet to be used for initialization
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_init(ocii_channel_t channel, ocii_packet_t *command);
+
+/**
+ * @brief Starts communication on a specified channel
+ * 
+ * This function begins the communication process on the given channel,
+ * allowing data to be sent and received
+ * 
+ * @param channel The channel to start communication on
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_start(ocii_channel_t channel);
+
+/**
+ * @brief Stops communication on a specified channel
+ * 
+ * This function halts the communication process on the given channel,
+ * preventing any further data transmission or reception
+ * 
+ * @param channel The channel to stop communication on
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_stop(ocii_channel_t channel);
+
+/**
+ * @brief Writes a message to a specified channel
+ * 
+ * This function sends the provided message packet to the specified channel
+ * for transmission to the device
+ * 
+ * @param channel The channel to write the message to
+ * @param message Pointer to the message packet to be sent
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_write(ocii_channel_t channel, ocii_packet_t *message);
+
+/**
+ * @brief Reads a message from a specified channel
+ * 
+ * This function retrieves a message from the specified channel and stores
+ * it in the provided message packet
+ * 
+ * @param channel The channel to read the message from
+ * @param message Pointer to the message packet where the received data will be stored
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_read(ocii_channel_t channel, ocii_packet_t *message);
+
+/**
+ * @brief Gets the status of a specified channel
+ * 
+ * This function retrieves the current status of the specified channel and
+ * stores it in the provided status packet
+ * 
+ * @param channel The channel to get the status for
+ * @param status Pointer to the status packet where the status information will be stored
+ * @return int Returns 0 on success, or a negative error code on failure
+ */
 extern int ocii_get_status(ocii_channel_t channel, ocii_packet_t *status);
+
+/**
+ * @brief Converts an error code to a human-readable string
+ * 
+ * This function takes an error code and returns a corresponding string
+ * that describes the error. This is useful for debugging and logging purposes
+ * 
+ * @param error_code The error code to convert
+ * @return const char* A pointer to a string describing the error
+ */
 extern const char *ocii_error_code_to_string(int error_code);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* opencanalystii_h */
