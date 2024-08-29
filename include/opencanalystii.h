@@ -105,7 +105,7 @@ typedef struct __attribute__((packed)) {
     uint8_t send_type;   /* Logical OR of flag bits from SEND_TYPE defines */
     uint8_t remote;      /* Set if message is remote */
     uint8_t extended;    /* Set if CAN ID is an extended address */
-    uint8_t data_len;    /* Data lenght */
+    uint8_t data_len;    /* Data length */
     uint8_t data[8];     /* Data */
 } ocii_message_t;
 
