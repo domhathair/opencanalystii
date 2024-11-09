@@ -92,10 +92,6 @@ Currently, the following things are not supported and may not be possible based 
 * Failure status of sent CAN messages. If the device fails to get bus arbitration after some unknown amount of time, it will drop the message silently;
 * Configuring whether messages are ACKed by Canalyst-II. This may be possible, see `ocii_init` `acc_code` and `acc_mask`.
 
-## Performance
-
-###TODO: Not yet tested
-
 ## How to build PlatformIO based project
 
 1. [Install PlatformIO Core](https://docs.platformio.org/page/core.html)
